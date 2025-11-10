@@ -62,21 +62,8 @@ This project is an automated workflow built in **n8n** that collects student det
 - Power BI  
 - Machine Learning  
 - Deep Learning  
-- Gen AI  
-
----
-
-## ✅ Output Example
-
-```json
-{
-  "total_score": 65,
-  "average_score": 8.12,
-  "level": "Expert",
-  "message": "You are eligible ✅"
-}
-
-
+- Gen AI
+- 
 ✅ How to Run
 
 Import the JSON workflow file into n8n
@@ -96,3 +83,19 @@ Passionate about Automation, Data Science, and AI
 
 ✅ This project is a good showcase for automation + Python + workflow logic.
 ✅ Perfect for resume & GitHub portfolio!
+
+---
+
+## ✅ Output Example
+
+```json
+{
+  "total_score": 65,
+  "average_score": 8.12,
+  "level": "Expert",
+  "message": "You are eligible ✅"
+}'''
+
+
+
+
