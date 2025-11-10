@@ -1,0 +1,474 @@
+{
+  "name": "Avg marks calculater",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "ENTER THE DETAILS",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "ENTER YOUR NAME",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "ENTER BATCH NAME",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "ENTER LOCATION",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "COURSE NAME",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -1136,
+        192
+      ],
+      "id": "0f09f5c0-4d60-4c5e-959d-2aedcbaabe2a",
+      "name": "On form submission",
+      "webhookId": "c6fc5f59-e2b5-4fc5-8b89-bdc9a9be29fb"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a9fdc669-ead8-471f-bf35-48fd0dde8f12",
+              "leftValue": "={{ $json[\"COURSE NAME\"].toLowerCase().trim() }}",
+              "rightValue": "data analyst",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -880,
+        192
+      ],
+      "id": "384bfd9d-f2bc-41a0-8601-29666427e520",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "=python",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "eda",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "sql",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "power bi",
+              "fieldType": "number",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.3,
+      "position": [
+        -672,
+        112
+      ],
+      "id": "96103dee-fbd7-442e-90e5-25b1e9102b1d",
+      "name": "Form",
+      "webhookId": "d902c9b5-1755-49a5-9d9d-2fe0e7336b7e"
+    },
+    {
+      "parameters": {
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "=python",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "eda",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "sql",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "power bi",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "machine learning",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "deep learning",
+              "fieldType": "number",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "gen ai",
+              "fieldType": "number",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.3,
+      "position": [
+        -672,
+        288
+      ],
+      "id": "d0a5f6f3-367d-429f-a044-02c4a366d0fc",
+      "name": "Form1",
+      "webhookId": "d902c9b5-1755-49a5-9d9d-2fe0e7336b7e"
+    },
+    {
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "# This script processes form input from the \"Form\" node in n8n\n\n# _items is a list of input data items from the Form node\nfor item in _items:\n    data = item[\"json\"]\n\n    # Extract form fields (convert to int safely)\n    python_score = int(data.get(\"python\", 0))\n    eda_score = int(data.get(\"eda\", 0))\n    sql_score = int(data.get(\"sql\", 0))\n    power_bi_score = int(data.get(\"power bi\", 0))\n\n    # Calculate total and average\n    total = python_score + eda_score + sql_score + power_bi_score\n    average = total / 4\n\n    # Categorize skill level\n    if average >= 8:\n        level = \"Expert\"\n    elif average >= 5:\n        level = \"Intermediate\"\n    else:\n        level = \"Beginner\"\n\n    # Add computed results to output JSON\n    item[\"json\"][\"total_score\"] = total\n    item[\"json\"][\"average_score\"] = average\n    item[\"json\"][\"level\"] = level\n\n# Return processed items\nreturn _items\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        112
+      ],
+      "id": "9b36a8e8-16d7-47bc-a3b5-b9da85fc23c5",
+      "name": "Code in Python (Native) (Beta)"
+    },
+    {
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "# Process Data Science skill form input in n8n\n# Works in \"Run Once for All Items\" mode\n\nfor item in _items:\n    data = item[\"json\"]\n\n    # Extract numeric inputs (use 0 if field missing)\n    python_score = int(data.get(\"python\", 0))\n    eda_score = int(data.get(\"eda\", 0))\n    sql_score = int(data.get(\"sql\", 0))\n    power_bi_score = int(data.get(\"power bi\", 0))\n    ml_score = int(data.get(\"machine learning\", 0))\n    dl_score = int(data.get(\"deep learning\", 0))\n    gen_ai_score = int(data.get(\"gen ai\", 0))\n\n    # Compute total and average\n    total = python_score + eda_score + sql_score + power_bi_score + ml_score + dl_score + gen_ai_score\n    average = round(total / 7, 2)\n\n    # Categorize skill level\n    if average >= 8:\n        level = \"Expert\"\n    elif average >= 5:\n        level = \"Intermediate\"\n    else:\n        level = \"Beginner\"\n\n    # Add summary results to output\n    item[\"json\"][\"total_score\"] = total\n    item[\"json\"][\"average_score\"] = average\n    item[\"json\"][\"level\"] = level\n\n    # Optional: create a comment or summary\n    item[\"json\"][\"summary\"] = f\"Average: {average}, Level: {level}\"\n\n# Return updated items\nreturn _items\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -464,
+        288
+      ],
+      "id": "e1c47e14-9763-46ab-b934-56ff76c1b0ec",
+      "name": "Code in Python (Native) (Beta)1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "de95f628-ec54-498c-816d-cb0b9a78a917",
+              "leftValue": "={{$json[\"average_score\"]}}",
+              "rightValue": 50,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        112
+      ],
+      "id": "4861484c-e18c-4bf9-b6ef-8cf4fbd56533",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b4efdd9d-4dde-4c1c-865f-554e2313bc16",
+              "leftValue": "={{$json[\"average_score\"]}}",
+              "rightValue": 50,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        288
+      ],
+      "id": "ee48493d-c3de-4b7b-9f6e-c0dd2f90feaa",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b53cdea4-107e-4c0d-95d1-578f76009150",
+              "name": "message",
+              "value": "You are eligible ",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        -16
+      ],
+      "id": "5c196bf2-ffe2-40a9-8129-698e38f79049",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "53e25334-df55-49a0-92e6-83eba1a34666",
+              "name": "message",
+              "value": "You are not eligible ",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -48,
+        144
+      ],
+      "id": "e8dc0942-dd2f-4181-8b46-4cfc18dc763f",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1773d2cb-fb65-4641-a56e-c77582724021",
+              "name": "message",
+              "value": "You are eligible ✅",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        32,
+        272
+      ],
+      "id": "9b122f8d-98f3-48a6-bd9f-d9b4e798a0c2",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b7f81941-a7cf-4363-9636-3301c550f915",
+              "name": "message",
+              "value": "You are not eligible ✅",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        496
+      ],
+      "id": "386b6387-820d-4d77-bc5b-30ebe16391aa",
+      "name": "Edit Fields3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Form1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form": {
+      "main": [
+        [
+          {
+            "node": "Code in Python (Native) (Beta)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form1": {
+      "main": [
+        [
+          {
+            "node": "Code in Python (Native) (Beta)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in Python (Native) (Beta)": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in Python (Native) (Beta)1": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "aac3daea-c193-434f-96ae-65fc5a5b2920",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dfc2a6f431a0260ea921ed643447ecb957a58094fad7c5237ef6dc91688cbb0e"
+  },
+  "id": "LyeO1RFMXhCVy4wZ",
+  "tags": []
+}
