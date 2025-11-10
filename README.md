@@ -94,8 +94,7 @@ Passionate about Automation, Data Science, and AI
   "average_score": 8.12,
   "level": "Expert",
   "message": "You are eligible ✅"
-}'''
-
+}
 
 
 
