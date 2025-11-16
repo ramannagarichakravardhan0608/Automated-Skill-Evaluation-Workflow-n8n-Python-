@@ -1,10 +1,10 @@
-# Average Marks Calculator using n8n & Python
+ Average Marks Calculator using n8n & Python
 
 This project is an automated workflow built in **n8n** that collects student details, takes subject marks, calculates the **total score**, **average score**, and **skill level**, and finally checks if the student is **eligible or not**.
 
----
 
-## ✅ Features
+
+ ✅ Features
 
 ✔ Collects student details through forms  
 ✔ Separate workflows for *Data Analyst* and *Data Scientist*  
